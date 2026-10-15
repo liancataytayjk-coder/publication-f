@@ -229,7 +229,7 @@ All three criteria hold. The RF's RMSE relative to the RW is 0.89, 0.71, 0.72, 0
 
 Table 2 and Figure 2 give the main result. First, the random walk is a poor benchmark for monthly Philippine inflation. Its RMSE is 1.20 times the AR's one month ahead and 2.20 times for inflation over the next twelve months. It is excluded from the 90% model confidence set in every decisive case. Every other model beats it, and so would pass the criterion of @medeiros2021, who report results relative to the random walk.
 
-Second, against the AR benchmark, no model wins. At $h = 1$ the relative RMSEs range from 0.98 (ML combination) and 0.99 (random forest) to 1.05 (ridge). The lowest one-sided Diebold–Mariano p-value across all seven challengers and four decisive cases is 0.32, far from any conventional threshold; after the Holm correction, the smallest is 1.00. Twelve months ahead the picture is the same: the ratios lie between 1.00 and 1.07. For inflation accumulated over the next three months, the combination and the random forest are about 2% more accurate than the AR (0.98 and 0.99), but for inflation over the next year they are worse (1.03 and 1.04). The model confidence set confirms that these differences are noise. The 90% set contains the AR in every case, together with almost every challenger. The models excluded are: Random walk, Random walk, 12-month mean at h = 1; Random walk, Gradient boosting at h = 12; Random walk at 3-month acc.; Random walk at 12-month acc..
+Second, against the AR benchmark, no model wins. At $h = 1$ the relative RMSEs range from 0.98 (ML combination) and 0.99 (random forest) to 1.05 (ridge). The lowest one-sided Diebold–Mariano p-value across all seven challengers and four decisive cases is 0.32, far from any conventional threshold; after the Holm correction, the smallest is 1.00. Twelve months ahead the picture is the same: the ratios lie between 1.00 and 1.07. For inflation accumulated over the next three months, the combination and the random forest are about 2% more accurate than the AR (0.98 and 0.99), but for inflation over the next year they are worse (1.03 and 1.04). The model confidence set confirms that these differences are noise. The 90% set contains the AR in every case, together with almost every challenger. The models excluded are: Random walk and Random walk (12-month mean) at h = 1; Random walk and Gradient boosting at h = 12; Random walk at 3-month acc.; Random walk at 12-month acc..
 
 Third, the methods that use the predictors most aggressively do worst. Ridge regression, which keeps every feature, and gradient boosting are up to 40% and 11% less accurate than the AR at some horizons (Table A3). At long horizons the LASSO usually selects few or no features (Section 5.2), so its forecast stays close to the window mean and is about as accurate as the AR. The factor model is almost identical to the AR (relative RMSEs between 0.99 and 1.02 across all horizons). The AR itself almost always chooses a single lag (the median at every horizon), so the strongest forecast is little more than a recent mean plus seasonal dummies.
 
@@ -239,7 +239,7 @@ Third, the methods that use the predictors most aggressively do worst. Ridge reg
 | Model | h = 1 | h = 12 | 3-month acc. | 12-month acc. |
 | --- | --- | --- | --- | --- |
 | Random walk | 1.20 | 1.29 | 1.50 | 2.20 |
-| Random walk, 12-month mean | 1.08 | 1.08 | 1.09 | 1.30 |
+| Random walk (12-month mean) | 1.08 | 1.08 | 1.09 | 1.30 |
 | AR | 1.00 | 1.00 | 1.00 | 1.00 |
 | Factor (AR + PCs) | 0.99 | 1.00 | 0.99 | 1.00 |
 | Ridge | 1.05 | 1.02 | 1.05 | 1.15 |
@@ -249,7 +249,7 @@ Third, the methods that use the predictors most aggressively do worst. Ridge reg
 | Gradient boosting | 1.00 | 1.07 | 1.02 | 1.11 |
 | ML combination | 0.98 | 1.01 | 0.98 | 1.03 |
 | AR RMSE (log points) | 0.382 | 0.410 | 0.866 | 2.073 |
-| In 90% MCS | AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, Gradient boosting, ML combination | Random walk, 12-month mean, AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, ML combination | Random walk, 12-month mean, AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, Gradient boosting, ML combination | Random walk, 12-month mean, AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, Gradient boosting, ML combination |
+| In 90% MCS | AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, Gradient boosting, ML combination | Random walk (12-month mean), AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, ML combination | Random walk (12-month mean), AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, Gradient boosting, ML combination | Random walk (12-month mean), AR, Factor (AR + PCs), Ridge, LASSO, Adaptive LASSO, Random forest, Gradient boosting, ML combination |
 
 *Note.* Stars mark one-sided Diebold–Mariano tests (HLN correction) that the model is more accurate than the AR: \* 10%, \*\* 5%, \*\*\* 1%. 'acc.' = inflation accumulated over the next 3 or 12 months. The last row lists the models in the 90% model confidence set.
 
@@ -365,7 +365,7 @@ The full decisions log (D1–D13) is in the replication package (`CLAUDE.md`), w
 | Model / h | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Random walk | 1.2 | 1.36 | 1.37 | 1.41 | 1.33 | 1.3 | 1.28 | 1.36 | 1.4 | 1.36 | 1.4 | 1.29 |
-| Random walk, 12-month mean | 1.08 | 1.08 | 1.06 | 1.05 | 1.07 | 1.07 | 1.08 | 1.09 | 1.09 | 1.09 | 1.09 | 1.08 |
+| Random walk (12-month mean) | 1.08 | 1.08 | 1.06 | 1.05 | 1.07 | 1.07 | 1.08 | 1.09 | 1.09 | 1.09 | 1.09 | 1.08 |
 | AR | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 |
 | Factor (AR + PCs) | 0.99 | 1.01 | 1.0 | 1.0 | 1.02 | 1.0 | 1.0 | 1.01 | 1.0 | 1.01 | 1.01 | 1.0 |
 | Ridge | 1.05 | 1.08 | 1.16 | 1.22 | 1.08 | 1.08 | 1.18 | 1.34 | 1.4 | 1.13 | 1.08 | 1.02 |

@@ -203,13 +203,30 @@ surge. (d) A small predictor set: external and money variables only (no CPI
 components). (e) Core inflation as the target (secondary target). (f) A dummy
 for the Jan 2018 join month. Robustness is reported for the four decisive cases.
 
-## Results
+## Results (2026-10-15; `output/tables/accuracy.csv`, main specification)
 
-*(none yet)*
+- **RQ1 — H1b supported (benchmark hard to beat).** Every model beats the RW
+  (AR/RW RMSE 0.83 at h = 1). No challenger beats the AR at any decisive case.
+  Relative RMSE to AR: combination 0.98 (h1), 1.01 (h12),
+  0.98 (acc3), 1.03 (acc12); RF 0.99, 1.01,
+  0.99, 1.04. Smallest DM p = 0.32; smallest Holm p = 1.00.
+  The AR is in the 90% MCS in every case. Ridge and LightGBM are worse than the AR
+  (up to +40% and +11%). The AR picks p = 1 at the median.
+- **RQ2 — H2 partly supported.** RF importance, h = 1: food 26%, regional
+  23%, other domestic 23%, world prices 9%,
+  energy 5%. At h = 12, other domestic 50%. Energy is *not* dominant.
+  Importance is in-sample (training windows) and descriptive.
+- **RQ3 — H3 not supported.** h = 1 combination: 0.98 (high-inflation months)
+  versus 0.99 (other months). acc12 RF: 1.00 versus 1.07.
+  No model anticipates the 2008, 2018, 2022–23 or 2026 episodes a year ahead (fig7).
+  Exploratory: in May 2026 the AR carried the April jump forward (1.48% forecast versus
+  -0.51% actual), while the combination gave 0.62%.
+- **Robustness:** running in the background (`output/estimate_log.txt`); then run
+  `06_evaluate.py`, `07_figures.py` and `08_paper.py`, and write `robust_comment`.
 
 ## Documents
 
-- `paper/manuscript_template.md` → `scripts/08_paper.py` → `paper/manuscript.md` / `.docx`
+- `paper/manuscript_template.md` + `paper/results_text.py` (prose with {{ n.* }} numbers) → `scripts/08_paper.py` → `paper/manuscript.md` / `.docx`; numbers in `output/tables/paper_numbers.json`
 
 ## Pipeline
 
