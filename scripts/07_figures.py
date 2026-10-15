@@ -64,14 +64,15 @@ def fig2():
     m["h"] = m.case.str[1:].astype(int)
     fig, axes = plt.subplots(1, 2, figsize=(6.4, 2.9), sharey=False)
     for ax, base in zip(axes, ("ar", "rw")):
-        for mod in ("rf", "combo", "lasso", "ridge", "lgbm", "factor") + (("rw",) if base == "ar" else ()):
+        for mod in ("rf", "combo", "lasso", "ridge", "lgbm", "factor"):
             q = m[m.model == mod].sort_values("h")
             ax.plot(q.h, q[f"ratio_{base}"], label=LABEL[mod], **STY[mod])
         ax.axhline(1, color=BLACK, linewidth=0.6)
         ax.set_xticks(range(1, 13))
         ax.set_xlabel("Forecast horizon (months)")
         ax.set_ylabel(f"RMSE relative to {'AR' if base == 'ar' else 'random walk'}")
-    axes[0].legend(fontsize=7, loc="best")
+    h, lab = axes[0].get_legend_handles_labels()
+    fig.legend(h, lab, loc="upper center", ncol=3, fontsize=7, bbox_to_anchor=(0.5, 1.08))
     fig.tight_layout()
     save(fig, "fig2_ratios", FIG)
 
@@ -89,7 +90,8 @@ def fig3():
         ax.xaxis.set_major_locator(mdates.YearLocator(5))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     axes[0].set_ylabel("Cumulative squared error of AR\nminus that of the model")
-    axes[0].legend(fontsize=7, loc="upper left")
+    h, lab = axes[0].get_legend_handles_labels()
+    fig.legend(h, lab, loc="upper center", ncol=3, fontsize=7, bbox_to_anchor=(0.5, 1.06))
     fig.tight_layout()
     save(fig, "fig3_csfe", FIG)
 
@@ -163,7 +165,7 @@ def fig7():
     ax.set_xlabel("Last month of the 12-month period")
     ax.xaxis.set_major_locator(mdates.YearLocator(3))
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    ax.legend(fontsize=7, loc="upper left")
+    ax.legend(fontsize=7, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 1.12))
     save(fig, "fig7_yearahead", FIG)
 
 

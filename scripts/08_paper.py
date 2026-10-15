@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from render_doc import render  # noqa: E402
 
 TAB = Path("output/tables")
-LABEL = {"rw": "Random walk", "rw_ao": "Random walk, 12-month mean", "ar": "AR", "factor": "Factor (AR + PCs)",
+LABEL = {"rw": "Random walk", "rw_ao": "Random walk (12-month mean)", "ar": "AR", "factor": "Factor (AR + PCs)",
          "ridge": "Ridge", "lasso": "LASSO", "adalasso": "Adaptive LASSO", "rf": "Random forest",
          "lgbm": "Gradient boosting", "combo": "ML combination"}
 ORDER = ["rw", "rw_ao", "ar", "factor", "ridge", "lasso", "adalasso", "rf", "lgbm", "combo"]
@@ -64,7 +64,7 @@ def build():
     n["val_maxdiff"] = fmt(val["diff"].abs().max() + 1e-9, 2)
     n["latest_month"] = MONTH(pd.Period(val.index[-1]).to_timestamp())
     n["yoy_latest"] = fmt(val["psa"].iloc[-1], 1)
-    jc = pd.read_csv(TAB / "join_check.csv")
+    jc = pd.read_csv(TAB / "join_check.csv", dtype={"code": str})
     n["join_z"] = fmt(abs(jc.loc[jc.code == "0", "z"].iloc[0]), 2)
     cpi = pd.read_parquet("data/processed/cpi_long.parquet")
     s = cpi[(cpi.geo == "PHILIPPINES") & (cpi.code == "0")].set_index("month")["index"]
@@ -127,7 +127,7 @@ def build():
     mcs = pd.read_csv(TAB / "mcs.csv")
     rows.append({"Model": "In 90% MCS", **{lab: ", ".join(LABEL[m] for m in mcs[(mcs.case == c) & mcs.in_mcs90].model)
                                          for c, lab in CASES}})
-    t["table2"] = md_table(pd.DataFrame(rows), f"Table 2. RMSE relative to the AR benchmark, Jan 2005–{n['oos_end']}",
+    t["table2"] = md_table(pd.DataFrame(rows), f"Table 2. RMSE relative to the AR benchmark, January 2005–{n['oos_end']}",
                            "Stars mark one-sided Diebold–Mariano tests (HLN correction) that the model is more "
                            "accurate than the AR: \\* 10%, \\*\\* 5%, \\*\\*\\* 1%. 'acc.' = inflation accumulated "
                            "over the next 3 or 12 months. The last row lists the models in the 90% model confidence set.")
@@ -138,6 +138,56 @@ def build():
     pa.columns = [str(c) for c in pa.columns]
     t["tableA3"] = md_table(pa.round(2).reset_index().rename(columns={"index": "Model / h"}),
                             "Table A3. RMSE relative to the AR at every horizon h = 1, ..., 12 (main specification)")
+    dec = main[main.case.isin([c for c, _ in CASES]) & main.model.isin(CHALL)]
+    n["min_dm_p"] = fmt(dec.dm_p_ar.min(), 2)
+    n["min_holm_p"] = fmt(dec.holm_p_ar.min(), 2)
+    cmb = dec[dec.model == "combo"].ratio_ar
+    n["combo_min"], n["combo_max"] = fmt(cmb.min(), 2), fmt(cmb.max(), 2)
+    h12 = main[(main.case == "h12") & main.model.isin(CHALL)].ratio_ar
+    n["min_h12"], n["max_h12"] = fmt(h12.min(), 2), fmt(h12.max(), 2)
+    n["ar_vs_rw_h1"] = fmt(100 * (1 - main[(main.case == "h1") & (main.model == "ar")].ratio_rw.iloc[0]), 0)
+    n["ridge_max_pct"] = fmt(100 * (full[full.model == "ridge"].ratio_ar.max() - 1), 0)
+    n["lgbm_max_pct"] = fmt(100 * (full[full.model == "lgbm"].ratio_ar.max() - 1), 0)
+    n["factor_min"] = fmt(full[full.model == "factor"].ratio_ar.min(), 2)
+    n["factor_max"] = fmt(full[full.model == "factor"].ratio_ar.max(), 2)
+    fc = pd.read_parquet("output/forecasts/main.parquet")
+    one = fc[fc.h == 1].set_index("target")
+    for lab, mth in (("mar26", "2026-03-01"), ("apr26", "2026-04-01"), ("may26", "2026-05-01")):
+        for col in ("actual", "ar", "combo"):
+            n[f"{lab}_{col}"] = fmt(one.loc[mth, col], 2)
+    names = {"expanding": "an expanding window", "w96": "a 96-month window", "w180": "a 180-month window",
+             "main_pre2020": "targets up to December 2019 only", "small": "only world prices and money as predictors",
+             "join2018": "a dummy for the January 2018 join", "core": "core inflation as the target"}
+    sents = []
+    for sp, nm in names.items():
+        a = acc[(acc.spec == sp) & acc.case.isin([c for c, _ in CASES]) & acc.model.isin(CHALL)]
+        if a.empty:
+            continue
+        best = a.loc[a.ratio_ar.idxmin()]
+        nsig = int((a.dm_p_ar < 0.05).sum())
+        sents.append(f"With {nm}, the lowest relative RMSE among the challengers is {best.ratio_ar:.2f} "
+                     f"({LABEL[best.model]}, {dict(CASES)[best.case]}), and {nsig} of {len(a)} "
+                     f"Diebold–Mariano tests against the AR reject at 5%"
+                     + (f" ({int((a.holm_p_ar < 0.05).sum())} after the Holm correction)." if nsig else "."))
+    n["robust_auto"] = " ".join(sents)
+    n["robust_comment"] = ""
+    order = ["main"] + [k for k in names if k in set(acc.spec)]
+    rows = []
+    for sp in order:
+        for m in ("factor", "lasso", "rf", "combo"):
+            r = {"Specification": "Main" if sp == "main" else names[sp].capitalize(), "Model": LABEL[m]}
+            for c, lab in CASES:
+                q = acc[(acc.spec == sp) & (acc.case == c) & (acc.model == m)].iloc[0]
+                r[lab] = fmt(q.ratio_ar, 2) + stars(q.dm_p_ar)
+            rows.append(r)
+    t["tableA4"] = md_table(pd.DataFrame(rows), "Table A4. Robustness: RMSE relative to the AR at the decisive cases",
+                            "Stars as in Table 2. Each check changes one element of the main specification.")
+    exc = []
+    for c, lab in CASES:
+        out = [LABEL[m] for m in mcs[(mcs.case == c) & ~mcs.in_mcs90].model]
+        exc.append(f"{' and '.join(out) if out else 'none'} at {lab}")
+    n["mcs_excluded"] = "; ".join(exc)
+    n["ar_in_all_mcs"] = bool(mcs[mcs.model == "ar"].in_mcs90.all())
     n["mcs"] = {c: [LABEL[m] for m in mcs[(mcs.case == c) & mcs.in_mcs90].model] for c, _ in CASES}
 
     # ---- regimes
@@ -184,7 +234,9 @@ def build():
 if __name__ == "__main__":
     n, t = build()
     tpl = Path("paper/manuscript_template.md")
-    text_keys = json.loads(Path("paper/results_text.json").read_text()) if Path("paper/results_text.json").exists() else {}
+    import subprocess
+    subprocess.run([sys.executable, "paper/results_text.py"], check=True)
+    text_keys = json.loads(Path("paper/results_text.json").read_text())
     import jinja2
     env = jinja2.Environment(undefined=jinja2.StrictUndefined, comment_start_string="<#--", comment_end_string="--#>")
     for k, v in text_keys.items():  # prose blocks may reference numbers: {{ n.key }}

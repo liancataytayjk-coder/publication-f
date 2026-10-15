@@ -276,6 +276,8 @@ gate) was committed before any estimate. Deviations are listed in Appendix B.
 
 {{ t.tableA3 }}
 
+{{ t.tableA4 }}
+
 # Figures
 
 ![Headline inflation in the Philippines, year on year, January 1995 to {{ n.latest_month }}. The grey band is the BSP target range of 2–4%. The dashed line marks the first month of the forecast evaluation. Source: PSA CPI (2018 = 100), our calculation.](../output/figures/fig1_inflation.png){width=95%}

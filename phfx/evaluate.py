@@ -20,6 +20,8 @@ def dm_test(e1, e2, h: int, loss="sq"):
     e1, e2 = np.asarray(e1, float), np.asarray(e2, float)
     d = (e1 ** 2 - e2 ** 2) if loss == "sq" else (np.abs(e1) - np.abs(e2))
     n = len(d)
+    if np.allclose(d, 0):  # identical forecasts: no evidence either way
+        return 0.0, 0.5
     dbar = d.mean()
     dc = d - dbar
     gam = [np.sum(dc[k:] * dc[: n - k]) / n for k in range(h)]
