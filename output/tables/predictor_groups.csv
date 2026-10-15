@@ -1,0 +1,87 @@
+variable,group,label,source
+cpi_01,food,FOOD AND NON-ALCOHOLIC BEVERAGES,PSA CPI 01
+cpi_01_1,food,FOOD,PSA CPI 01.1
+cpi_01_2,food,NON-ALCOHOLIC BEVERAGES,PSA CPI 01.2
+cpi_02,other_domestic,ALCOHOLIC BEVERAGES AND TOBACCO,PSA CPI 02
+cpi_02_1,other_domestic,ALCOHOLIC BEVERAGES,PSA CPI 02.1
+cpi_02_3,other_domestic,TOBACCO,PSA CPI 02.3
+cpi_02_900,other_domestic,NON-FOOD,PSA CPI 02.900
+cpi_03,other_domestic,CLOTHING AND FOOTWEAR,PSA CPI 03
+cpi_03_1,other_domestic,CLOTHING,PSA CPI 03.1
+cpi_03_2,other_domestic,FOOTWEAR,PSA CPI 03.2
+cpi_04,other_domestic,"HOUSING, WATER, ELECTRICITY, GAS, AND OTHER FUELS",PSA CPI 04
+cpi_04_1,other_domestic,ACTUAL RENTALS FOR HOUSING,PSA CPI 04.1
+cpi_04_3,other_domestic,"MAINTENANCE, REPAIR AND SECURITY OF THE DWELLING",PSA CPI 04.3
+cpi_04_4,energy_utilities,WATER SUPPLY AND MISCELLANEOUS SERVICES RELATING TO THE DWELLING,PSA CPI 04.4
+cpi_04_5,energy_utilities,"ELECTRICITY, GAS AND OTHER FUELS",PSA CPI 04.5
+cpi_05,other_domestic,"FURNISHINGS, HOUSEHOLD EQUIPMENT AND ROUTINE HOUSEHOLD MAINTENANCE",PSA CPI 05
+cpi_05_1,other_domestic,"FURNITURE, FURNISHINGS, AND LOOSE CARPETS",PSA CPI 05.1
+cpi_05_2,other_domestic,HOUSEHOLD TEXTILES,PSA CPI 05.2
+cpi_05_3,other_domestic,HOUSEHOLD APPLIANCES,PSA CPI 05.3
+cpi_05_4,other_domestic,"GLASSWARE, TABLEWARE AND HOUSEHOLD UTENSILS",PSA CPI 05.4
+cpi_05_5,other_domestic,TOOLS AND EQUIPMENT FOR HOUSE AND GARDEN,PSA CPI 05.5
+cpi_05_6,other_domestic,GOODS AND SERVICES FOR ROUTINE HOUSEHOLD MAINTENANCE,PSA CPI 05.6
+cpi_06,other_domestic,HEALTH,PSA CPI 06
+cpi_06_1,other_domestic,MEDICINES AND HEALTH PRODUCTS,PSA CPI 06.1
+cpi_06_2,other_domestic,OUTPATIENT CARE SERVICES,PSA CPI 06.2
+cpi_06_3,other_domestic,INPATIENT CARE SERVICES,PSA CPI 06.3
+cpi_07,other_domestic,TRANSPORT,PSA CPI 07
+cpi_07_2,energy_utilities,OPERATION OF PERSONAL TRANSPORT EQUIPMENT,PSA CPI 07.2
+cpi_07_3,other_domestic,PASSENGER TRANSPORT SERVICES,PSA CPI 07.3
+cpi_07_4,other_domestic,TRANSPORT SERVICES OF GOODS,PSA CPI 07.4
+cpi_08,other_domestic,INFORMATION AND COMMUNICATION,PSA CPI 08
+cpi_08_1,other_domestic,INFORMATION AND COMMUNICATION EQUIPMENT,PSA CPI 08.1
+cpi_09,other_domestic,"RECREATION, SPORT AND CULTURE",PSA CPI 09
+cpi_09_4,other_domestic,RECREATIONAL SERVICES,PSA CPI 09.4
+cpi_09_6,other_domestic,CULTURAL SERVICES,PSA CPI 09.6
+cpi_09_7,other_domestic,"NEWSPAPERS, BOOKS AND STATIONERY",PSA CPI 09.7
+cpi_10,other_domestic,EDUCATION SERVICES,PSA CPI 10
+cpi_10_4,other_domestic,TERTIARY EDUCATION (S),PSA CPI 10.4
+cpi_11,other_domestic,RESTAURANTS AND ACCOMMODATION SERVICES,PSA CPI 11
+cpi_11_1,other_domestic,FOOD AND BEVERAGE SERVING SERVICES,PSA CPI 11.1
+cpi_13,other_domestic,"PERSONAL CARE, AND MISCELLANEOUS GOODS AND SERVICES",PSA CPI 13
+cpi_13_1,other_domestic,PERSONAL CARE,PSA CPI 13.1
+cpi_13_2,other_domestic,OTHER PERSONAL EFFECTS,PSA CPI 13.2
+cpi_01_1_1,food,Cereals and cereal products (ND),PSA CPI 01.1.1
+cpi_01_1_2,food,Meat and other parts of slaughtered land animals (ND),PSA CPI 01.1.2
+cpi_01_1_3,food,Fish and other seafood (ND),PSA CPI 01.1.3
+cpi_01_1_4,food,"Milk, other dairy products and eggs (ND)",PSA CPI 01.1.4
+cpi_01_1_5,food,Oils and fats (ND),PSA CPI 01.1.5
+cpi_01_1_6,food,Fruits and nuts (ND),PSA CPI 01.1.6
+cpi_01_1_7,food,"Vegetables, tubers, plantains, cooking bananas and pulses (ND)",PSA CPI 01.1.7
+cpi_01_1_8,food,"Sugar, confectionery and desserts (ND)",PSA CPI 01.1.8
+cpi_01_1_9,food,Ready-made food and other food products n.e.c. (ND),PSA CPI 01.1.9
+cpi_04_5_1,energy_utilities,Electricity (ND),PSA CPI 04.5.1
+cpi_04_5_2,energy_utilities,Gas (ND),PSA CPI 04.5.2
+cpi_04_5_4,energy_utilities,Solid fuels (ND),PSA CPI 04.5.4
+cpi_07_2_2,energy_utilities,Fuels and lubricants for personal transport equipment (ND),PSA CPI 07.2.2
+cpi_01_1_1_12,food,Rice,PSA CPI 01.1.1.12
+core,other_domestic,Core CPI,PSA core CPI
+reg_BARMM,regional,Bangsamoro Autonomous Region in Muslim Mindanao (BARMM),PSA regional CPI
+reg_CAR,regional,Cordillera Administrative Region (CAR),PSA regional CPI
+reg_MIMAROPARegi,regional,MIMAROPA Region,PSA regional CPI
+reg_NCR,regional,National Capital Region (NCR),PSA regional CPI
+reg_NIR,regional,Negros Island Region (NIR),PSA regional CPI
+reg_IlocosRegion,regional,Region I (Ilocos Region),PSA regional CPI
+reg_CagayanValle,regional,Region II (Cagayan Valley),PSA regional CPI
+reg_CentralLuzon,regional,Region III (Central Luzon),PSA regional CPI
+reg_CALABARZON,regional,Region IV-A (CALABARZON),PSA regional CPI
+reg_ZamboangaPen,regional,Region IX (Zamboanga Peninsula),PSA regional CPI
+reg_BicolRegion,regional,Region V (Bicol Region),PSA regional CPI
+reg_WesternVisay,regional,Region VI (Western Visayas),PSA regional CPI
+reg_CentralVisay,regional,Region VII (Central Visayas),PSA regional CPI
+reg_EasternVisay,regional,Region VIII (Eastern Visayas),PSA regional CPI
+reg_NorthernMind,regional,Region X (Northern Mindanao),PSA regional CPI
+reg_DavaoRegion,regional,Region XI (Davao Region),PSA regional CPI
+reg_SOCCSKSARGEN,regional,Region XII (SOCCSKSARGEN),PSA regional CPI
+reg_Caraga,regional,Region XIII (Caraga),PSA regional CPI
+brent,external_prices,"Brent crude, USD",FRED
+dubai,external_prices,"Dubai crude, USD",FRED
+imf_allcomm,external_prices,IMF all-commodities index,FRED
+imf_food,external_prices,IMF food price index,FRED
+wheat,external_prices,"Wheat, USD/mt",FRED
+maize,external_prices,"Maize, USD/mt",FRED
+brent_php,external_prices,Dubai crude in pesos,FRED
+fedfunds,money_fx,US federal funds rate (change),FRED
+php_usd,money_fx,Peso per US dollar,BIS
+bsp_rate,money_fx,BSP policy rate (change),BIS

@@ -1,4 +1,4 @@
-"""Download a PxWeb table (PSA OpenSTAT and other statistics offices) unchanged to a gzipped CSV.
+r"""Download a PxWeb table (PSA OpenSTAT and other statistics offices) unchanged to a gzipped CSV.
 
 Pulls every value of every variable, one geography at a time to stay under the
 PxWeb cell limit, retries with exponential backoff, and decodes Latin-1 when
