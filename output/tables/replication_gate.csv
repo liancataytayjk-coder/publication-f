@@ -1,0 +1,4 @@
+criterion,target,estimate,pass
+G1,"RF/RW RMSE < 1 at h=1,3,6,12",h1=0.894; h3=0.714; h6=0.719; h12=0.688,True
+G2,mean over h of RF/AR RMSE < 1,0.950,True
+G3,"RF lowest average RMSE of rw, ar, ridge, lasso, rf",rf=0.3257; lasso=0.3302; ar=0.3431; ridge=0.3558; rw=0.4385,True

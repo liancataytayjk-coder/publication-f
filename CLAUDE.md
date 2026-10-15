@@ -125,7 +125,12 @@ The gate passes if G1, G2 and G3 all hold. If it fails, stop, re-read the
 specification, fix the code and record what changed. Pass ranges are not
 loosened after the results are seen.
 
-**Result:** *(not yet run)*
+**Result (2026-10-15): PASS.** `output/tables/replication_gate.csv`, 720 forecasts.
+RMSE relative to RW at h = 1, 3, 6, 12: RF 0.894, 0.714, 0.719, 0.688; LASSO 0.867,
+0.730, 0.750, 0.699; AR 0.913, 0.766, 0.760, 0.729; ridge 0.908, 0.807, 0.830, 0.731.
+G1 holds at every horizon; G2: mean RF/AR = 0.950; G3: average RMSE RF 0.3257 <
+LASSO 0.3302 < AR 0.3431 < ridge 0.3558 < RW 0.4385. Note the RF margin over
+LASSO is small, and LASSO is better than RF at h = 1.
 
 ## Estimation plan (pre-specified 2026-10-15, before any Philippine estimate)
 
