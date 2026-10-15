@@ -184,7 +184,9 @@ def forecast_origin(y: pd.Series, X: pd.DataFrame | None, T: int, h: int, window
     AR_P = 12                                    # benchmark AR / factor lags, p <= 12 by BIC
     burn = max(d.y_lags, d.x_lags, AR_P) - 1
     if t_start < burn:
-        raise ValueError(f"window too long for origin {T}: need t_start >= {burn}")
+        t_start = burn  # early origins: use every available pair (window <= `window`), D13
+    if t_end - t_start + 1 < 60:
+        raise ValueError(f"fewer than 60 training months at origin {T}")
     lo = t_start - burn                          # features need lagged rows; PCs from rows lo..T
     xs = None if xv is None else xv[lo: T + 1]
     Zall, names = build_features(yv[lo: T + 1], xs, months[lo: T + 1], d, use_x=xv is not None)

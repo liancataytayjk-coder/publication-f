@@ -104,12 +104,11 @@ def run(spec, T, h, y, X, importance):
 def main(spec):
     y, X = data_for(spec)
     pos_last_x = y.index.get_loc(last_x)
-    jobs = []
-    for h in H:
-        for tgt in y.loc[OOS_START:].dropna().index:
-            T = y.index.get_loc(tgt) - h
-            if T <= pos_last_x:
-                jobs.append((T, h))
+    # origins from Dec 2004 (first target Jan 2005) to the last month with predictors; the
+    # target must be observed (D13)
+    first = y.index.get_loc(pd.Timestamp(OOS_START)) - 1
+    last_y = y.index.get_loc(y.dropna().index.max())
+    jobs = [(T, h) for h in H for T in range(first, pos_last_x + 1) if T + h <= last_y]
     t0 = time.time()
     res = Parallel(n_jobs=4)(delayed(run)(spec, T, h, y, X, spec == "main" and h in (1, 12))
                              for T, h in jobs)

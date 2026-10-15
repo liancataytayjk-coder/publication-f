@@ -1,0 +1,45 @@
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/externals/loky/process_executor.py", line 490, in _process_worker
+    r = call_item()
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/externals/loky/process_executor.py", line 291, in __call__
+    return self.fn(*self.args, **self.kwargs)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 607, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+            ~~~~^^^^^^^^^^^^^^^^^
+  File "/home/user/publication-f/scripts/05_estimate.py", line 90, in run
+    f = forecast_origin(y, X, T, h, window=s["window"], d=Design(), models=ALL_MODELS,
+                        expanding=s.get("expanding", False), extra=extra)
+  File "/home/user/publication-f/phfx/forecast.py", line 187, in forecast_origin
+    raise ValueError(f"window too long for origin {T}: need t_start >= {burn}")
+ValueError: window too long for origin 130: need t_start >= 11
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/publication-f/scripts/05_estimate.py", line 125, in <module>
+    main(sp)
+    ~~~~^^^^
+  File "/home/user/publication-f/scripts/05_estimate.py", line 114, in main
+    res = Parallel(n_jobs=4)(delayed(run)(spec, T, h, y, X, spec == "main" and h in (1, 12))
+                             for T, h in jobs)
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 2098, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 1704, in _get_outputs
+    yield from self._retrieve()
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 1806, in _retrieve
+    self._raise_error_fast()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 1885, in _raise_error_fast
+    error_job.get_result(self.timeout)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 780, in get_result
+    return self._return_or_raise()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/user/publication-f/.venv/lib/python3.13/site-packages/joblib/parallel.py", line 795, in _return_or_raise
+    raise self._result
+ValueError: window too long for origin 130: need t_start >= 11
