@@ -158,18 +158,17 @@ def build():
     names = {"expanding": "an expanding window", "w96": "a 96-month window", "w180": "a 180-month window",
              "main_pre2020": "targets up to December 2019 only", "small": "only world prices and money as predictors",
              "join2018": "a dummy for the January 2018 join", "core": "core inflation as the target"}
-    sents = []
-    for sp, nm in names.items():
-        a = acc[(acc.spec == sp) & acc.case.isin([c for c, _ in CASES]) & acc.model.isin(CHALL)]
-        if a.empty:
-            continue
-        best = a.loc[a.ratio_ar.idxmin()]
-        nsig = int((a.dm_p_ar < 0.05).sum())
-        sents.append(f"With {nm}, the lowest relative RMSE among the challengers is {best.ratio_ar:.2f} "
-                     f"({LABEL[best.model]}, {dict(CASES)[best.case]}), and {nsig} of {len(a)} "
-                     f"Diebold–Mariano tests against the AR reject at 5%"
-                     + (f" ({int((a.holm_p_ar < 0.05).sum())} after the Holm correction)." if nsig else "."))
-    n["robust_auto"] = " ".join(sents)
+    rob = acc[acc.spec.isin(names) & acc.case.isin([c for c, _ in CASES]) & acc.model.isin(CHALL)]
+    best = rob.groupby("spec").ratio_ar.min()
+    n["n_rob_specs"] = int(rob.spec.nunique())
+    n["n_rob_tests"] = int(len(rob))
+    n["n_rob_sig5"] = int((rob.dm_p_ar < 0.05).sum())
+    n["rob_best_min"], n["rob_best_max"] = fmt(best.min(), 2), fmt(best.max(), 2)
+    n["rob_specs_list"] = "; ".join(names[sp] for sp in names if sp in set(rob.spec))
+    n["robust_auto"] = (f"The checks are: {n['rob_specs_list']}. Across these {n['n_rob_specs']} checks, the "
+                        f"lowest relative RMSE among the challengers ranges from {n['rob_best_min']} to "
+                        f"{n['rob_best_max']}, and {('none' if n['n_rob_sig5'] == 0 else n['n_rob_sig5'])} of the {n['n_rob_tests']} Diebold–Mariano "
+                        f"tests against the AR reject at 5%.")
     n["robust_comment"] = ""
     order = ["main"] + [k for k in names if k in set(acc.spec)]
     rows = []
@@ -239,8 +238,9 @@ if __name__ == "__main__":
     text_keys = json.loads(Path("paper/results_text.json").read_text())
     import jinja2
     env = jinja2.Environment(undefined=jinja2.StrictUndefined, comment_start_string="<#--", comment_end_string="--#>")
-    for k, v in text_keys.items():  # prose blocks may reference numbers: {{ n.key }}
-        n[k] = env.from_string(v).render(n=n)
+    for _ in range(2):  # two passes, so a prose block may include another prose block
+        for k, v in text_keys.items():  # prose blocks reference numbers as {{ n.key }}
+            n[k] = env.from_string(v).render(n=n)
     Path(TAB / "paper_numbers.json").write_text(json.dumps(n, indent=1, default=str))
     render(tpl, "paper/manuscript.md", numbers=TAB / "paper_numbers.json", bib="paper/references.bib",
            resource_path="paper:output/figures", tables=t)

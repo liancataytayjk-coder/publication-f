@@ -117,8 +117,8 @@ def fig5():
              "small": "(d) World prices and money only", "join2018": "(f) Jan 2018 join dummy",
              "core": "(e) Core inflation target"}
     order = [o for o in order if o in set(acc.spec)]
-    cases = [("h1", "h = 1"), ("h12", "h = 12"), ("acc3", "3-month accumulated"), ("acc12", "12-month accumulated")]
-    fig, axes = plt.subplots(1, 4, figsize=(7.0, 3.2), sharey=True)
+    cases = [("h1", "h = 1"), ("h12", "h = 12"), ("acc3", "3-month acc."), ("acc12", "12-month acc.")]
+    fig, axes = plt.subplots(1, 4, figsize=(7.0, 3.2), sharey=True, sharex=True)
     y = np.arange(len(order))[::-1]
     for ax, (case, lab) in zip(axes, cases):
         for mod, st in (("rf", dict(marker="o", color=BLACK, linestyle="")),
@@ -128,8 +128,12 @@ def fig5():
         ax.axvline(1, color=BLACK, linewidth=0.6)
         ax.set_title(lab, fontsize=8)
         ax.set_xlabel("RMSE / AR")
+        ax.set_xlim(0.90, 1.14)
+        ax.set_xticks([0.95, 1.05])
+        ax.tick_params(axis="x", labelsize=7)
     axes[0].set_yticks(y, [names[o] for o in order])
-    axes[-1].legend(fontsize=7, loc="lower right")
+    hd, lb = axes[0].get_legend_handles_labels()
+    fig.legend(hd, lb, loc="upper center", ncol=2, fontsize=7, bbox_to_anchor=(0.6, 1.07))
     fig.tight_layout()
     save(fig, "fig5_robustness", FIG)
 

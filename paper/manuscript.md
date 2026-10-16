@@ -1,7 +1,7 @@
 ---
 title: "Can Machine Learning Beat Simple Benchmarks in Forecasting Philippine Inflation? Evidence from a Pre-Registered Pseudo Out-of-Sample Evaluation, 2005–2026"
 author: "[Author name], [Affiliation], [email]"
-date: "Draft of 15 October 2026"
+date: "Draft of 16 October 2026"
 abstract: |
   Do machine-learning (ML) models that use many predictors forecast Philippine inflation better than simple benchmarks? We replicate the data-rich design of Medeiros et al. (2021) on official monthly data from the Philippine Statistics Authority, 1994–2026. We compare ridge, LASSO, adaptive LASSO, random forest and gradient boosting forecasts, their combination and a factor model with random-walk and autoregressive (AR) benchmarks over 260 out-of-sample months, using 86 predictors that include detailed food and energy prices, all 18 regional indices and world commodity prices. The design was pre-registered, and the code first had to reproduce the reference paper's main result on US data, which it did. Every model beats the random walk by a wide margin, but none beats the AR. At the four pre-specified test cases, the best ML forecast, the equal-weight combination, has a root mean squared error between 0.98 and 1.03 times the AR's. No difference is statistically significant, and the AR is never excluded from the 90% model confidence set. The gains are not larger in high-inflation months. Food and regional prices carry most of the random forest's one-month-ahead predictive content. Yet no model, linear or nonlinear, anticipated the large inflation episodes of 2008, 2018, 2022–23 or 2026 a year ahead. For the Philippines, simple benchmarks remain very hard to beat; adding predictors and nonlinearity does not change that.
 keywords: "inflation forecasting; machine learning; random forest; LASSO; forecast evaluation; Philippines; emerging markets"
@@ -256,7 +256,7 @@ Third, the methods that use the predictors most aggressively do worst. Ridge reg
 
 ## 5.2 RQ2: Which predictors matter?
 
-Figure 4 shows which predictor groups the random forest relies on. One month ahead, food prices carry 26% of the grouped permutation importance, regional inflation 23% and the other domestic CPI components 23%. World prices (9%), energy and utilities (5%) and money and the exchange rate (4%) matter much less. The LASSO tells the same story: it selects at least one food feature at 71% of origins and one regional feature at 72%, against 33% for world prices. Twelve months ahead, the random forest shifts toward the slow-moving domestic components (50%), and the LASSO selects almost nothing; the share of origins with any food feature falls to 14%.
+Figure 4 shows which predictor groups the random forest relies on. One month ahead, food prices carry 26% of the grouped permutation importance, regional inflation 23% and the other domestic CPI components 23%. World prices (9%), energy and utilities (5%) and money and the exchange rate (4%) matter much less. The LASSO tells the same story: it selects at least one food feature at 71% of origins and one regional feature at 72%, against 33% for world prices. Twelve months ahead, the random forest shifts toward the slow-moving domestic components (50%), and the LASSO selects far fewer features: the share of origins with any food feature falls to 14%, and with any other domestic feature to 30%.
 
 H2 is therefore supported at short horizons, with one qualification. Food is the most important group one month ahead, but energy is not; the oil and fuel series matter less than regional and other domestic prices. And because the models that use these predictors do not beat the AR, the importance measures describe where the models find signal in the training data, not where they gain accuracy out of sample. The food and regional series co-move closely with headline inflation, so they largely repeat information that past inflation already contains. These importance measures are computed on the training windows and are descriptive.
 
@@ -264,7 +264,7 @@ H2 is therefore supported at short horizons, with one qualification. Food is the
 
 Since 2005, year-on-year inflation has been above 4% in 39% of months. Table 3 compares relative RMSEs in these months and in the rest. H3 predicts that the ML gains concentrate in the high-inflation months. They do not. One month ahead, the combination's relative RMSE is 0.98 in high-inflation months and 0.99 in other months, and the random forest's is 0.99 and 0.99. For inflation over the next year, the random forest is about as accurate as the AR in high-inflation periods (1.00) and worse in calm ones (1.07). That is a small relative advantage in turbulent times, but only because the AR is also bad then.
 
-Figure 3 tracks the comparison over time. A rising line means the model is gaining on the AR. One month ahead, the random forest and the combination gain slowly from 2010 to 2020, lose that lead in the 2021–23 surge, and then swing sharply in the 2026 oil shock. No model saw the March–April 2026 jump coming (monthly inflation of 1.36% and 2.60%). But the AR then carried the April jump forward, forecasting 1.48% for May, when prices in fact fell (-0.51%). The ML models, which average over many predictors, gave a damped 0.62%. Twelve months ahead, the ML models lose ground in the 2022–23 surge and do not recover it. Figure 7 shows why accuracy is so hard to come by at this horizon. Both the AR and the ML combination forecast year-ahead inflation close to its recent average, between about 3% and 5%, and neither anticipates the 2008, 2018, 2022–23 or 2026 episodes.
+Figure 3 tracks the comparison over time. A rising line means the model is gaining on the AR. One month ahead, the random forest and the combination gain a little on the AR before 2008 and again in 2010–12, hold that small lead until 2020, lose it in the 2021–23 surge, and then swing sharply in the 2026 oil shock. No model saw the March–April 2026 jump coming (monthly inflation of 1.36% and 2.60%). But the AR then carried the April jump forward, forecasting 1.48% for May, when prices in fact fell (-0.51%). The ML models, which average over many predictors, gave a damped 0.62%. Twelve months ahead, the ML models lose ground in the 2022–23 surge and do not recover it. Figure 7 shows why accuracy is so hard to come by at this horizon. Both the AR and the ML combination forecast year-ahead inflation close to its recent average, mostly between about 3% and 5%, and neither anticipates the 2008, 2018, 2022–23 or 2026 episodes.
 
 
 **Table 3. RMSE relative to the AR in high-inflation and other months**
@@ -286,7 +286,9 @@ Figure 3 tracks the comparison over time. A rising line means the model is gaini
 
 # 6. Robustness
 
-Figure 5 and Table A4 report the four decisive cases under each pre-registered robustness check. With targets up to December 2019 only, the lowest relative RMSE among the challengers is 0.97 (Factor (AR + PCs), h = 1), and 0 of 28 Diebold–Mariano tests against the AR reject at 5%. 
+Figure 5 and Table A4 report the four decisive cases under each pre-registered robustness check. The checks are: a 96-month window; a 180-month window; targets up to December 2019 only; only world prices and money as predictors; a dummy for the January 2018 join; core inflation as the target. Across these 6 checks, the lowest relative RMSE among the challengers ranges from 0.94 to 0.98, and none of the 168 Diebold–Mariano tests against the AR reject at 5%. Taken together, the checks leave the conclusion unchanged. For headline inflation, the best model in each check is at most about 3% more accurate than the AR, the same small and insignificant margin as in the main specification. A shorter (96-month) or longer (180-month) window does not help the data-rich models: more data per window does not turn the small gains into significant ones. Leaving out the pandemic and the 2022–23 surge (targets up to December 2019) does not change the picture either, so the null result is not an artefact of recent shocks. Using only world prices and money as predictors makes gradient boosting and the random forest worse at the one-year horizon (1.20 and 1.07), which confirms that the world-price block on its own adds noise. The January 2018 join dummy changes nothing.
+
+The one partial exception is core inflation, which excludes the most volatile food and energy items. With core inflation as the target, the random forest and the ML combination have relative RMSEs of 0.95 and 0.95 one month ahead, and the combination reaches 0.94 for inflation over the next three months (one-sided DM p = 0.061). This is significant only at the 10% level, and not after the Holm correction (p = 1.000). We read it as weak evidence that the ML models find some signal once the hardest-to-predict supply shocks are removed from the target. That fits the explanation in Section 7: the obstacle is the unpredictability of food and energy shocks, not a lack of model flexibility.
 
 # 7. Discussion and conclusion
 
@@ -385,10 +387,30 @@ The full decisions log (D1–D13) is in the replication package (`CLAUDE.md`), w
 | Main | LASSO | 1.01 | 1.01 | 0.99 | 1.01 |
 | Main | Random forest | 0.99 | 1.01 | 0.99 | 1.04 |
 | Main | ML combination | 0.98 | 1.01 | 0.98 | 1.03 |
+| A 96-month window | Factor (AR + PCs) | 1.00 | 1.01 | 1.00 | 1.03 |
+| A 96-month window | LASSO | 1.01 | 1.00 | 1.00 | 0.99 |
+| A 96-month window | Random forest | 1.00 | 1.01 | 0.98 | 1.01 |
+| A 96-month window | ML combination | 0.99 | 1.01 | 0.98 | 1.00 |
+| A 180-month window | Factor (AR + PCs) | 1.01 | 1.00 | 1.01 | 1.00 |
+| A 180-month window | LASSO | 1.00 | 1.00 | 1.01 | 1.01 |
+| A 180-month window | Random forest | 0.99 | 0.99 | 0.99 | 1.03 |
+| A 180-month window | ML combination | 0.97 | 1.00 | 0.99 | 1.01 |
 | Targets up to december 2019 only | Factor (AR + PCs) | 0.97 | 1.00 | 0.98 | 1.01 |
 | Targets up to december 2019 only | LASSO | 1.03 | 0.99 | 1.03 | 1.03 |
 | Targets up to december 2019 only | Random forest | 0.98 | 0.98 | 1.00 | 1.09 |
 | Targets up to december 2019 only | ML combination | 0.98 | 0.98 | 1.00 | 1.07 |
+| Only world prices and money as predictors | Factor (AR + PCs) | 0.98 | 1.00 | 0.99 | 1.01 |
+| Only world prices and money as predictors | LASSO | 1.01 | 1.01 | 1.00 | 1.02 |
+| Only world prices and money as predictors | Random forest | 0.99 | 1.05 | 1.01 | 1.07 |
+| Only world prices and money as predictors | ML combination | 0.97 | 1.04 | 1.00 | 1.05 |
+| A dummy for the january 2018 join | Factor (AR + PCs) | 0.99 | 1.00 | 0.99 | 1.00 |
+| A dummy for the january 2018 join | LASSO | 1.01 | 1.01 | 0.99 | 1.01 |
+| A dummy for the january 2018 join | Random forest | 1.00 | 1.01 | 0.99 | 1.03 |
+| A dummy for the january 2018 join | ML combination | 0.99 | 1.01 | 0.98 | 1.03 |
+| Core inflation as the target | Factor (AR + PCs) | 0.99 | 1.04 | 0.98 | 1.00 |
+| Core inflation as the target | LASSO | 1.01 | 1.00 | 1.02 | 1.00 |
+| Core inflation as the target | Random forest | 0.95 | 1.01 | 0.94 | 1.00 |
+| Core inflation as the target | ML combination | 0.95 | 0.99 | 0.94\* | 0.98 |
 
 *Note.* Stars as in Table 2. Each check changes one element of the main specification.
 

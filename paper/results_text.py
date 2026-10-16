@@ -84,7 +84,8 @@ T["rq2_text"] = (
     "feature at {{ n.lassofreq_food_h1 }}% of origins and one regional feature at {{ n.lassofreq_regional_h1 }}%, "
     "against {{ n.lassofreq_external_prices_h1 }}% for world prices. Twelve months ahead, the random forest "
     "shifts toward the slow-moving domestic components ({{ n.imp_other_domestic_h12 }}%), and the LASSO selects "
-    "almost nothing; the share of origins with any food feature falls to {{ n.lassofreq_food_h12 }}%.\n\n"
+    "far fewer features: the share of origins with any food feature falls to {{ n.lassofreq_food_h12 }}%, and "
+    "with any other domestic feature to {{ n.lassofreq_other_domestic_h12 }}%.\n\n"
     "H2 is therefore supported at short horizons, with one qualification. Food is the most important group "
     "one month ahead, but energy is not; the oil and fuel series matter less than regional and other domestic prices. "
     "And because the models that use these predictors do not beat the AR, the importance measures describe "
@@ -104,14 +105,15 @@ T["rq3_text"] = (
     "and worse in calm ones ({{ n.reg_acc12_other_rf_ar }}). That is a small relative advantage in turbulent "
     "times, but only because the AR is also bad then.\n\n"
     "Figure 3 tracks the comparison over time. A rising line means the model is gaining on the AR. One month "
-    "ahead, the random forest and the combination gain slowly from 2010 to 2020, lose that lead in the 2021–23 "
-    "surge, and then swing sharply in the 2026 oil shock. No model saw the March–April 2026 jump coming (monthly "
+    "ahead, the random forest and the combination gain a little on the AR before 2008 and again in "
+    "2010–12, hold that small lead until 2020, lose it in the 2021–23 surge, and then swing sharply in the 2026 "
+    "oil shock. No model saw the March–April 2026 jump coming (monthly "
     "inflation of {{ n.mar26_actual }}% and {{ n.apr26_actual }}%). But the AR then carried the April jump "
     "forward, forecasting {{ n.may26_ar }}% for May, when prices in fact fell ({{ n.may26_actual }}%). The ML "
     "models, which average over many predictors, gave a damped {{ n.may26_combo }}%. Twelve months ahead, the "
     "ML models lose ground in the 2022–23 surge and do not recover it. Figure 7 shows why accuracy is so hard to "
     "come by at this horizon. Both the AR and the ML combination forecast year-ahead inflation close to its "
-    "recent average, between about 3% and 5%, and neither anticipates the 2008, 2018, 2022–23 or 2026 episodes."
+    "recent average, mostly between about 3% and 5%, and neither anticipates the 2008, 2018, 2022–23 or 2026 episodes."
 )
 
 T["discussion_text"] = (
@@ -147,6 +149,27 @@ T["discussion_text"] = (
 T["robust_text"] = (
     "Figure 5 and Table A4 report the four decisive cases under each pre-registered robustness check. "
     "{{ n.robust_auto }} {{ n.robust_comment }}"
+)
+
+T["robust_comment"] = (
+    "Taken together, the checks leave the conclusion unchanged. For headline inflation, the best model in "
+    "each check is at most about 3% more accurate than the AR, the same small and insignificant margin as in "
+    "the main specification. A shorter (96-month) or longer (180-month) window does not help the data-rich models: more "
+    "data per window does not turn the small gains into significant ones. Leaving out the pandemic and the "
+    "2022–23 surge (targets up to December 2019) does not change the picture either, so the null result is not "
+    "an artefact of recent shocks. Using only world prices and money as predictors makes gradient boosting and "
+    "the random forest worse at the one-year horizon ({{ n.small_acc12_lgbm_ar }} and {{ n.small_acc12_rf_ar }}), "
+    "which confirms that the world-price block on its own adds noise. The January 2018 join dummy changes "
+    "nothing.\n\n"
+    "The one partial exception is core inflation, which excludes the most volatile food and energy items. With "
+    "core inflation as the target, the random forest and the ML combination have relative RMSEs of "
+    "{{ n.core_h1_rf_ar }} and {{ n.core_h1_combo_ar }} one month ahead, and the combination reaches "
+    "{{ n.core_acc3_combo_ar }} for inflation over the next three months (one-sided DM p = "
+    "{{ n.core_acc3_combo_pdm_ar }}). This is significant only at the 10% level, and not after the Holm "
+    "correction (p = {{ n.core_acc3_combo_pholm_ar }}). We read it as weak evidence that the ML models find "
+    "some signal once the hardest-to-predict supply shocks are removed from the target. That fits the "
+    "explanation in Section 7: the obstacle is the unpredictability of food and energy shocks, not a lack of "
+    "model flexibility."
 )
 
 T["deviations_text"] = (
