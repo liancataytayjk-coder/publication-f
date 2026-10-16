@@ -2,7 +2,7 @@
 title: "Can Machine Learning Beat Simple Benchmarks in Forecasting Philippine Inflation? Evidence from a Pre-Registered Pseudo Out-of-Sample Evaluation, 2005–2026"
 author:
   - "Lian Cataytay[^aff]"
-date: "Draft of {{ n.build_date }}"
+date: "Submitted to the *Journal of Asian Economics*. Draft of {{ n.build_date }}"
 abstract: |
   {{ n.abstract }}
 
@@ -11,7 +11,7 @@ abstract: |
   **JEL codes:** C53, C55, E31, E37
 ---
 
-[^aff]: [Affiliation]. Contact: [e-mail]. [Acknowledgements.]
+[^aff]: University of Southeastern Philippines, Davao City, Philippines. E-mail: lrcataytay00745\@usep.edu.ph.
 
 <#-- Rendered by scripts/08_paper.py. Do not edit paper/manuscript.md by hand; edit this template. --#>
 
@@ -28,7 +28,11 @@ imported, and typhoons hit farm output every year. As a result, Philippine
 inflation swings much more than inflation in advanced economies. Since 2005 it
 has left the 2–4% target band in {{ n.share_outside_band }}% of months
 (Figure 1), and the most recent episode, an oil-price shock in early 2026, pushed
-it to {{ n.yoy_latest }}% in {{ n.latest_month }}.
+it to {{ n.yoy_latest }}% in {{ n.latest_month }}. These features are common
+across emerging Asia: rice is the staple, food takes a large share of household
+budgets, and most economies import their oil. The Philippine evidence is
+therefore a useful test case for other Asian central banks that are weighing
+whether to add ML tools to their forecasting toolkits.
 
 Machine-learning (ML) methods promise better forecasts when there are many
 possible predictors. They do this in two ways: they *shrink* or *select* among
@@ -249,7 +253,10 @@ hyperparameters in advance instead of tuning them. This protects against
 overfitting the evaluation sample, but it may understate what a carefully tuned
 model could achieve. Finally, we do not compare with the BSP's own published
 forecasts, which are made on a quarterly schedule with information we do not
-observe.
+observe. The replication gate is qualitative. It checks that our code
+reproduces the reference paper's rankings and its random-forest advantage on US
+data, not its exact numbers, which we could not access when the gate was
+written.
 
 # Declarations {-}
 

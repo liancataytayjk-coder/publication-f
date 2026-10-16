@@ -172,6 +172,14 @@ T["robust_comment"] = (
     "model flexibility."
 )
 
+T["highlights"] = "\n".join([
+    "- Machine-learning forecasts of Philippine inflation are compared with benchmarks.",
+    "- The design is pre-registered; the code first reproduces the US benchmark result.",
+    "- No ML model beats an autoregressive benchmark; all beat the random walk.",
+    "- Food and regional prices carry most short-horizon signal, but add no accuracy.",
+    "- No model anticipates the 2008, 2018, 2022–23 or 2026 inflation surges.",
+])
+
 T["deviations_text"] = (
     "The full decisions log (D1–D13) is in the replication package (`CLAUDE.md`), with dates and labels. Three "
     "changes were made after the plan was written but before any estimate: world food and grain prices come "

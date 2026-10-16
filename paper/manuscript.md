@@ -2,7 +2,7 @@
 title: "Can Machine Learning Beat Simple Benchmarks in Forecasting Philippine Inflation? Evidence from a Pre-Registered Pseudo Out-of-Sample Evaluation, 2005–2026"
 author:
   - "Lian Cataytay[^aff]"
-date: "Draft of 16 October 2026"
+date: "Submitted to the *Journal of Asian Economics*. Draft of 16 October 2026"
 abstract: |
   Do machine-learning (ML) models that use many predictors forecast Philippine inflation better than simple benchmarks? We replicate the data-rich design of Medeiros et al. (2021) on official monthly data from the Philippine Statistics Authority, 1994–2026. We compare ridge, LASSO, adaptive LASSO, random forest and gradient boosting forecasts, their combination and a factor model with random-walk and autoregressive (AR) benchmarks over 260 out-of-sample months, using 86 predictors that include detailed food and energy prices, all 18 regional indices and world commodity prices. The design was pre-registered, and the code first had to reproduce the reference paper's main result on US data, which it did. Every model beats the random walk by a wide margin, but none beats the AR. At the four pre-specified test cases, the best ML forecast, the equal-weight combination, has a root mean squared error between 0.98 and 1.03 times the AR's. No difference is statistically significant, and the AR is never excluded from the 90% model confidence set. The gains are not larger in high-inflation months. Food and regional prices carry most of the random forest's one-month-ahead predictive content. Yet no model, linear or nonlinear, anticipated the large inflation episodes of 2008, 2018, 2022–23 or 2026 a year ahead. For the Philippines, simple benchmarks remain very hard to beat; adding predictors and nonlinearity does not change that.
 
@@ -11,7 +11,7 @@ abstract: |
   **JEL codes:** C53, C55, E31, E37
 ---
 
-[^aff]: [Affiliation]. Contact: [e-mail]. [Acknowledgements.]
+[^aff]: University of Southeastern Philippines, Davao City, Philippines. E-mail: lrcataytay00745\@usep.edu.ph.
 
 
 
@@ -28,7 +28,11 @@ imported, and typhoons hit farm output every year. As a result, Philippine
 inflation swings much more than inflation in advanced economies. Since 2005 it
 has left the 2–4% target band in 56% of months
 (Figure 1), and the most recent episode, an oil-price shock in early 2026, pushed
-it to 7.2% in September 2026.
+it to 7.2% in September 2026. These features are common
+across emerging Asia: rice is the staple, food takes a large share of household
+budgets, and most economies import their oil. The Philippine evidence is
+therefore a useful test case for other Asian central banks that are weighing
+whether to add ML tools to their forecasting toolkits.
 
 Machine-learning (ML) methods promise better forecasts when there are many
 possible predictors. They do this in two ways: they *shrink* or *select* among
@@ -319,7 +323,10 @@ hyperparameters in advance instead of tuning them. This protects against
 overfitting the evaluation sample, but it may understate what a carefully tuned
 model could achieve. Finally, we do not compare with the BSP's own published
 forecasts, which are made on a quarterly schedule with information we do not
-observe.
+observe. The replication gate is qualitative. It checks that our code
+reproduces the reference paper's rankings and its random-forest advantage on US
+data, not its exact numbers, which we could not access when the gate was
+written.
 
 # Declarations {-}
 

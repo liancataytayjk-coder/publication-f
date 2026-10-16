@@ -11,8 +11,8 @@ Economic Statistics* 39(1), 98–119), "Forecasting inflation in a data-rich
 environment: the benefits of machine learning methods", on official Philippine
 Statistics Authority (PSA) data. Unit: the Philippines, monthly, 1994–2026.
 Output: a journal manuscript (personal research). Target journal: *Journal of
-Forecasting* (first choice); alternatives are the *Asian Economic Journal* and
-*The Philippine Review of Economics*. The user chose the topic (Philippine
+Asian Economics* (Elsevier; chosen by the user 2026-10-16). Author: Lian
+Cataytay, University of Southeastern Philippines (lrcataytay00745@usep.edu.ph). The user chose the topic (Philippine
 inflation), the angle (ML against benchmarks) and asked us to propose the
 reference paper and the journal (2026-10-15).
 
@@ -106,6 +106,7 @@ as **to be confirmed against the PDF** (see Open questions).
 | D11 | 2026-10-15 | Final predictor set: 86 series, complete Feb 1994–Jul 2026 (`output/tables/predictor_groups.csv`). Dropped 17: 16 CPI groups that start after 1994 and US CPI (Oct 2025 not published). | The rule in the plan: every model sees the same complete data. | pre-registered |
 | D12 | 2026-10-15 | Implementation details, fixed before the gate is run: (i) LASSO and adaptive LASSO choose the penalty by BIC = n·ln(RSS/n) + df·ln(n) along a 100-point path, considering only models with df < n/2, so that the BIC cannot run off to a perfect in-sample fit when there are more predictors than months; (ii) adaptive LASSO weights are 1/(|β_ridge| + 1/√n); (iii) the AR and factor benchmarks always search p ≤ 12, independent of the lag design of the data-rich models; (iv) principal components are recomputed in every window from data up to the origin only; (v) the engine is tested for look-ahead (`tests/test_forecast.py`). A one-origin smoke test of `05_estimate.py` (Jun 2010, h = 12) was run to check the code; it is not an evaluation and is not reported. | Needed to make the plan computable; checked by the simulation tests. | pre-registered |
 | D13 | 2026-10-15 | (i) The out-of-sample period is defined by forecast origin: origins Dec 2004 to Jul 2026 (the last month with all predictors), with each horizon's target observed by Sep 2026, so targets for horizon h start at Dec 2004 + h. (ii) At the first origins the 12 inflation lags leave fewer than 120 training months; the window then uses every available month (at least 108). | The first main run stopped with an error at the first origin before any forecast was saved: the plan's 'first origin Dec 2004' and 'window of 120' cannot both hold for h > 0. No result had been seen. | pre-registered (correction) |
+| D14 | 2026-10-16 | Target journal: *Journal of Asian Economics* (user's choice). The Medeiros et al. (2021) PDF is not available to the user either, so the replication gate stays qualitative for good (D8); the manuscript says so. The journal's guide for authors is blocked from this container (403), so standard Elsevier items (highlights, title page, cover letter) are prepared and flagged for checking. | User, 2026-10-16. | supplementary (presentation only) |
 
 ## Replication gate (pre-registered 2026-10-15, before any estimate)
 
@@ -239,9 +240,9 @@ for the Jan 2018 join month. Robustness is reported for the four decisive cases.
 
 ## Open questions
 
-- [ ] Reference PDF needed to confirm: the window length, the OOS periods, the
-      RW definition, the predictor lags and factors, and the exact RMSE ratios
-      (would turn the gate into numeric targets). The user can upload it.
-- [ ] Target journal choice: *Journal of Forecasting* is proposed; the user to confirm.
+- [x] Reference PDF: not available (user, 2026-10-16). The gate stays qualitative (D14).
+- [x] Target journal: *Journal of Asian Economics* (D14).
+- [ ] Check the manuscript against the *Journal of Asian Economics* guide for authors
+      (word limit, abstract length, highlights, anonymized review) — blocked here.
 - [ ] Would the user like the BSP's own published inflation forecasts (Monetary
       Policy Report) as an extra benchmark? Hand-collected, so not in the pipeline yet.

@@ -250,5 +250,8 @@ if __name__ == "__main__":
         for k, v in text_keys.items():  # prose blocks reference numbers as {{ n.key }}
             n[k] = env.from_string(v).render(n=n)
     Path(TAB / "paper_numbers.json").write_text(json.dumps(n, indent=1, default=str))
+    for doc in ("highlights", "cover_letter"):
+        render(Path(f"paper/{doc}_template.md"), f"paper/{doc}.md", numbers=TAB / "paper_numbers.json",
+               resource_path="paper", tables=t)
     render(tpl, "paper/manuscript.md", numbers=TAB / "paper_numbers.json", bib="paper/references.bib",
            resource_path="paper:output/figures", tables=t)

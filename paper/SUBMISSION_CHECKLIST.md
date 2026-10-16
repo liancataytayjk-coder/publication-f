@@ -1,15 +1,20 @@
-# Submission checklist
+# Submission checklist: *Journal of Asian Economics* (Elsevier)
 
-- [ ] **Author details**: replace `[Author name], [Affiliation], [email]` in `paper/manuscript_template.md`.
-- [ ] **Target journal**: proposed *Journal of Forecasting*; alternatives *Asian Economic Journal*,
-      *The Philippine Review of Economics*. Confirm the choice, then apply its author guidelines
-      (word limit, abstract length, reference style, figure format).
-- [ ] **Reference paper PDF** (Medeiros et al. 2021): confirm the design details marked "to confirm"
-      in `CLAUDE.md` and, if wanted, add numeric replication targets (would be logged as a new decision).
+The journal's guide for authors could not be opened from the build container
+(HTTP 403), so check each item below against the current guide before submitting.
+
+- [x] **Author details**: Lian Cataytay, University of Southeastern Philippines (title-page footnote).
+- [x] **Highlights**: `paper/highlights.docx`, 5 bullets of at most 85 characters each (Elsevier's usual rule; confirm).
+- [x] **Cover letter**: `paper/cover_letter.docx` (draft; read and adjust).
+- [ ] **Guide for authors**: check the word limit, abstract length (currently about 220 words),
+      number of keywords (currently 6), JEL codes, reference style, and whether review is
+      double-anonymized. If it is, remove the author name and footnote from the manuscript
+      and submit a separate title page.
+- [ ] **Robustness**: confirm that all seven checks (including the expanding window) are in
+      `output/tables/accuracy.csv` and that Section 6 reads correctly.
 - [ ] **References flagged as unverified**: `ke2017` (LightGBM; no DOI) and the pages of `atkeson2001`.
-- [ ] **Robustness checks**: confirm that all seven specifications are in `output/tables/accuracy.csv`
-      and that the robustness paragraph reads correctly.
-- [ ] **Read-through** for tone and length; the draft is about 6,000 words including tables.
-- [ ] **Cover letter**: emphasise the pre-registration, the replication gate and the null result.
-- [ ] **Data and code statement**: deposit the repository (e.g. Zenodo DOI) and cite it.
+- [ ] **Reference paper**: the PDF of Medeiros et al. (2021) was not available, so the replication
+      gate is qualitative. The manuscript says so in the Limitations paragraph.
+- [ ] **Data and code statement**: deposit the repository (e.g. a Zenodo DOI) and cite it.
 - [ ] **Pre-registration evidence**: cite the commit hashes of the pre-registration (`git log`).
+- [ ] **Final read-through** in Word, with true Times New Roman; check that equation (1) shows parentheses.
