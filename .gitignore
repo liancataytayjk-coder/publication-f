@@ -5,3 +5,4 @@ deliverables/
 *.pyc
 .pytest_cache/
 output/*_log.txt
+output/forecasts/_parts/

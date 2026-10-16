@@ -110,13 +110,27 @@ def main(spec):
     last_y = y.index.get_loc(y.dropna().index.max())
     jobs = [(T, h) for h in H for T in range(first, pos_last_x + 1) if T + h <= last_y]
     t0 = time.time()
-    res = Parallel(n_jobs=4)(delayed(run)(spec, T, h, y, X, spec == "main" and h in (1, 12))
-                             for T, h in jobs)
+    # checkpoint each horizon to output/forecasts/_parts so a restarted container resumes
+    parts = OUT / "_parts"
+    parts.mkdir(exist_ok=True)
+    res = []
+    for h in H:
+        ck = parts / f"{spec}_h{h}.pkl"
+        if ck.exists():
+            res += pd.read_pickle(ck)
+            continue
+        r = Parallel(n_jobs=4)(delayed(run)(spec, T, hh, y, X, spec == "main" and hh in (1, 12))
+                               for T, hh in jobs if hh == h)
+        pd.to_pickle(r, ck)
+        res += r
+        print(f"  {spec} h={h} done ({time.time() - t0:.0f}s)", flush=True)
     fc = pd.DataFrame([r for r, _ in res])
     fc.to_parquet(OUT / f"{spec}.parquet", index=False)
     if spec == "main":
         pd.DataFrame([i for _, i in res if i is not None]).to_parquet(TAB / "importance_raw.parquet", index=False)
     print(f"{spec}: {len(fc)} forecasts, X={X.shape[1]} predictors, {time.time() - t0:.0f}s")
+    for ck in parts.glob(f"{spec}_h*.pkl"):
+        ck.unlink()
 
 
 if __name__ == "__main__":
