@@ -21,11 +21,13 @@ T["abstract"] = (
     "beats the random walk by a wide margin, but none beats the AR. At the four pre-specified test cases, the "
     "best ML forecast, the equal-weight combination, has a root mean squared error between {{ n.combo_min }} and "
     "{{ n.combo_max }} times the AR's. No difference is statistically significant, and the AR is never excluded "
-    "from the 90% model confidence set. The gains are not larger in high-inflation months. Food and regional "
+    "from the 90% model confidence set. Only with an expanding estimation window do two ML forecasts become "
+    "significantly more accurate one month ahead, and not after a correction for multiple testing. The gains "
+    "are not larger in high-inflation months. Food and regional "
     "prices carry most of the random forest's one-month-ahead predictive content. Yet no model, linear or "
     "nonlinear, anticipated the large inflation episodes of 2008, 2018, 2022–23 or 2026 a year ahead. For the "
-    "Philippines, simple benchmarks remain very hard to beat; adding predictors and nonlinearity does not change "
-    "that."
+    "Philippines, simple benchmarks remain very hard to beat; adding predictors and nonlinearity does little "
+    "to change that."
 )
 
 T["intro_findings"] = (
@@ -129,7 +131,9 @@ T["discussion_text"] = (
     "120-month window gives about 120 observations for {{ n.n_features }} features. With so few observations "
     "per feature, the flexible models fit noise (ridge and boosting) or shrink to the mean (LASSO). The "
     "360-month windows available for the United States are not possible for an inflation-targeting regime that "
-    "began in 2002. Third, and most importantly, Philippine inflation episodes are driven by supply "
+    "began in 2002. The expanding-window check supports this reading: with all the data since 1994, the ML "
+    "combination gains about 5% on the AR one month ahead, the only marginally significant gain we find "
+    "(Section 6). Third, and most importantly, Philippine inflation episodes are driven by supply "
     "shocks to rice, other food and oil that are themselves unpredictable a month or a year ahead. The predictors "
     "that carry signal are other prices that move at the same time as headline inflation, so they "
     "add little to its own history.\n\n"
@@ -152,16 +156,28 @@ T["robust_text"] = (
 )
 
 T["robust_comment"] = (
-    "Taken together, the checks leave the conclusion unchanged. For headline inflation, the best model in "
-    "each check is at most about 3% more accurate than the AR, the same small and insignificant margin as in "
-    "the main specification. A shorter (96-month) or longer (180-month) window does not help the data-rich models: more "
+    "Taken together, the checks leave the conclusion largely unchanged, with one qualification. With rolling "
+    "windows, the best model in each check is at most about 3% more accurate than the AR, the same small and "
+    "insignificant margin as in the main specification. A shorter (96-month) or longer (180-month) window does not help the data-rich models: more "
     "data per window does not turn the small gains into significant ones. Leaving out the pandemic and the "
     "2022–23 surge (targets up to December 2019) does not change the picture either, so the null result is not "
     "an artefact of recent shocks. Using only world prices and money as predictors makes gradient boosting and "
     "the random forest worse at the one-year horizon ({{ n.small_acc12_lgbm_ar }} and {{ n.small_acc12_rf_ar }}), "
     "which confirms that the world-price block on its own adds noise. The January 2018 join dummy changes "
     "nothing.\n\n"
-    "The one partial exception is core inflation, which excludes the most volatile food and energy items. With "
+    "The qualification is the expanding window, which uses every month since 1994 at each origin and so gives "
+    "the models the most data. One month ahead, the ML combination and gradient boosting are then about 5% more "
+    "accurate than the AR (relative RMSEs of {{ n.expanding_h1_combo_ar }} and {{ n.expanding_h1_lgbm_ar }}; "
+    "one-sided DM p = {{ n.expanding_h1_combo_pdm_ar }} and {{ n.expanding_h1_lgbm_pdm_ar }}). These are the "
+    "only two of the {{ n.n_rob_tests }} robustness tests that reject at 5%, and neither survives the Holm "
+    "correction (p = {{ n.expanding_h1_combo_pholm_ar }} and {{ n.expanding_h1_lgbm_pholm_ar }}). At the other "
+    "three decisive cases the expanding-window ratios lie close to one. In this check, gradient boosting and "
+    "the combination have the lowest one-month RMSEs of any model in any headline-inflation specification "
+    "evaluated on the full sample ({{ n.expanding_h1_lgbm_rmse }} and {{ n.expanding_h1_combo_rmse }}, against "
+    "{{ n.main_h1_ar_rmse }} for the main AR). So more training data helps the flexible models a little at the "
+    "shortest horizon, which supports the small-sample explanation in Section 7, but the gain is small and "
+    "statistically fragile.\n\n"
+    "A second partial exception is core inflation, which excludes the most volatile food and energy items. With "
     "core inflation as the target, the random forest and the ML combination have relative RMSEs of "
     "{{ n.core_h1_rf_ar }} and {{ n.core_h1_combo_ar }} one month ahead, and the combination reaches "
     "{{ n.core_acc3_combo_ar }} for inflation over the next three months (one-sided DM p = "
@@ -175,7 +191,7 @@ T["robust_comment"] = (
 T["highlights"] = "\n".join([
     "- Machine-learning forecasts of Philippine inflation are compared with benchmarks.",
     "- The design is pre-registered; the code first reproduces the US benchmark result.",
-    "- No ML model beats an autoregressive benchmark; all beat the random walk.",
+    "- ML models do not reliably beat an autoregressive benchmark; all beat the random walk.",
     "- Food and regional prices carry most short-horizon signal, but add no accuracy.",
     "- No model anticipates the 2008, 2018, 2022–23 or 2026 inflation surges.",
 ])

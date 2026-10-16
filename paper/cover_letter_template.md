@@ -26,7 +26,10 @@ The main finding is negative and, we believe, useful. Every model beats the
 random walk, but none beats a simple autoregressive benchmark: the best
 machine-learning forecast has an error between {{ n.combo_min }} and
 {{ n.combo_max }} times the benchmark's, and no difference is significant. The
-result holds across window lengths, predictor sets and samples. Two features
+result holds across rolling-window lengths, predictor sets and samples. Only
+with an expanding window do two machine-learning forecasts gain a small edge one
+month ahead (about 5%), and that edge does not survive a correction for multiple
+testing. Two features
 make it credible. The design was pre-registered before any Philippine forecast
 was computed, and the code first had to reproduce the reference paper's main
 result on US data. The paper also shows where the predictive content lies (food

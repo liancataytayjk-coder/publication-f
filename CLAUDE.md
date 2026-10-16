@@ -222,13 +222,15 @@ for the Jan 2018 join month. Robustness is reported for the four decisive cases.
   No model anticipates the 2008, 2018, 2022–23 or 2026 episodes a year ahead (fig7).
   Exploratory: in May 2026 the AR carried the April jump forward (1.48% forecast versus
   -0.51% actual), while the combination gave 0.62%.
-- **Robustness (2026-10-16; six of seven checks done).** 96- and 180-month windows,
+- **Robustness (2026-10-16; all seven checks done).** Rolling 96/180-month windows,
   targets to Dec 2019, world prices and money only, Jan 2018 join dummy: best
-  challenger 0.97–0.98, and none of the DM tests rejects at 5%. Core inflation target: RF 0.95 and
-  combination 0.95 at h = 1, combination 0.94 at acc3 (DM p = 0.061; Holm 1.00); weak
-  evidence only. The expanding window is still running (`output/estimate_expanding_log.txt`;
-  it checkpoints each horizon in `output/forecasts/_parts/`, so it resumes after a container restart).
-  When it finishes, run `06_evaluate.py`, `07_figures.py` and `08_paper.py`, check the robustness paragraph, commit and push.
+  challenger 0.97–0.98, no DM test rejects at 5%. **Expanding window:** ML combination
+  0.95 and LightGBM 0.94 at h = 1 (one-sided DM p = 0.032 and 0.025; Holm 0.87 and 0.70);
+  the other decisive cases are close to 1. These are the only 2 of 196 robustness tests
+  that reject at 5%. Read as: more training data helps a little at h = 1, consistent with
+  the small-sample explanation; fragile. Core target: combination 0.94 at acc3
+  (p = 0.061; Holm 1.00), weak evidence. Abstract, highlights, Section 6, discussion and
+  cover letter all say this.
 
 ## Documents
 

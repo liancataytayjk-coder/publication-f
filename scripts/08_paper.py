@@ -171,7 +171,7 @@ def build():
     n["n_rob_sig5"] = int((rob.dm_p_ar < 0.05).sum())
     n["rob_best_min"], n["rob_best_max"] = fmt(best.min(), 2), fmt(best.max(), 2)
     n["rob_specs_list"] = "; ".join(names[sp] for sp in names if sp in set(rob.spec))
-    n["robust_auto"] = (f"The checks are: {n['rob_specs_list']}. Across these {n['n_rob_specs']} checks, the "
+    n["robust_auto"] = (f"The checks are: {n['rob_specs_list']}. Across these {['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'][n['n_rob_specs']]} checks, the "
                         f"lowest relative RMSE among the challengers ranges from {n['rob_best_min']} to "
                         f"{n['rob_best_max']}, and {('none' if n['n_rob_sig5'] == 0 else n['n_rob_sig5'])} of the {n['n_rob_tests']} Diebold–Mariano "
                         f"tests against the AR reject at 5%.")
