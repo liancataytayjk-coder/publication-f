@@ -119,9 +119,20 @@ def main(spec):
         if ck.exists():
             res += pd.read_pickle(ck)
             continue
-        r = Parallel(n_jobs=4)(delayed(run)(spec, T, hh, y, X, spec == "main" and hh in (1, 12))
-                               for T, hh in jobs if hh == h)
+        hjobs = [(T, hh) for T, hh in jobs if hh == h]
+        r = []
+        for c0 in range(0, len(hjobs), 40):  # chunks of 40 origins, each checkpointed
+            cck = parts / f"{spec}_h{h}_c{c0}.pkl"
+            if cck.exists():
+                r += pd.read_pickle(cck)
+                continue
+            rc = Parallel(n_jobs=4)(delayed(run)(spec, T, hh, y, X, spec == "main" and hh in (1, 12))
+                                    for T, hh in hjobs[c0:c0 + 40])
+            pd.to_pickle(rc, cck)
+            r += rc
         pd.to_pickle(r, ck)
+        for cck in parts.glob(f"{spec}_h{h}_c*.pkl"):
+            cck.unlink()
         res += r
         print(f"  {spec} h={h} done ({time.time() - t0:.0f}s)", flush=True)
     fc = pd.DataFrame([r for r, _ in res])
