@@ -27,13 +27,21 @@ def render(template, out, numbers=None, bib=None, toc=False, resource_path=None,
                              keep_trailing_newline=True, comment_start_string="<#--", comment_end_string="--#>")
     text = env.get_template(template.name).render(n=n, t=tables or {})
     out.write_text(text)
-    args = []
+    args = ["--number-sections"]
+    ref = Path(__file__).resolve().parents[1] / "paper" / "lian-article-reference.docx"
+    if ref.exists():  # house style (Times New Roman, journal layout)
+        args.append(f"--reference-doc={ref}")
     if bib:
         args += ["--citeproc", f"--bibliography={bib}", "--metadata=link-citations:true"]
     if toc:
         args += ["--toc", "--toc-depth=2"]
     args.append(f"--resource-path={resource_path or out.parent}")
     pypandoc.convert_file(str(out), "docx", outputfile=str(out.with_suffix(".docx")), extra_args=args)
+    finisher = Path(__file__).resolve().parent / "style" / "docx_style.py"
+    if finisher.exists():
+        import subprocess
+        import sys
+        subprocess.run([sys.executable, str(finisher), "finish", str(out.with_suffix(".docx"))], check=True)
     print("wrote", out, "and", out.with_suffix(".docx"))
 
 

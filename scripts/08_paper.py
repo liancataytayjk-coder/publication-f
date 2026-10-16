@@ -30,14 +30,20 @@ MONTH = lambda s: pd.Timestamp(s).strftime("%B %Y")  # noqa: E731
 
 
 def md_table(df, caption, note=None):
+    """Pipe table with a pandoc caption (rendered above the table) and a 10 pt note below."""
     cols = list(df.columns)
-    lines = ["", f"**{caption}**", "", "| " + " | ".join(cols) + " |",
-             "| " + " | ".join(["---"] * len(cols)) + " |"]
+    # dash counts set relative column widths in pandoc pipe tables
+    w = [max([len(str(c))] + [len(str(v)) for v in df[c]]) for c in cols]
+    w = [min(max(x, 8), 28) for x in w]  # wide enough for numbers, long text wraps
+    num = [all(str(v).lstrip("−-").replace(".", "", 1).rstrip("*\\").isdigit() for v in df[c]) for c in cols]
+    seps = [("-" * w[i] + ":") if (num[i] and i > 0) else (":" + "-" * w[i]) for i in range(len(cols))]
+    lines = ["", "| " + " | ".join(cols) + " |", "| " + " | ".join(seps) + " |"]
     for _, r in df.iterrows():
-        lines.append("| " + " | ".join(str(r[c]) for c in cols) + " |")
-    lines.append("")
+        lines.append("| " + " | ".join(str(r[c]).replace("-", "−") if str(r[c]).startswith("-") else str(r[c])
+                                       for c in cols) + " |")
+    lines += ["", f"Table: {caption}", ""]
     if note:
-        lines += [f"*Note.* {note}", ""]
+        lines += ['::: {custom-style="Table Note"}', f"*Notes:* {note}", ":::", ""]
     return "\n".join(lines)
 
 
@@ -81,7 +87,7 @@ def build():
     rows = []
     for g, d in groups.groupby("group", sort=False):
         rows.append({"Group": GROUP_LABEL[g], "Series": len(d),
-                     "Content": "; ".join(d.label.str.capitalize().head(8)) + ("; ..." if len(d) > 8 else ""),
+                     "Content": "; ".join(d.label.map(lambda x: x.capitalize() if x.isupper() else x).head(8)) + ("; ..." if len(d) > 8 else ""),
                      "Source": ", ".join(sorted(set(d.source.str.split().str[0])))})
     t["table1"] = md_table(pd.DataFrame(rows), "Table 1. Predictors by group",
                            "All series are monthly, Feb 1994 to " + n["last_x"] + ". Prices and the exchange rate "
@@ -98,7 +104,7 @@ def build():
     piv = rr.pivot(index="model", columns="h", values="ratio_rw").reindex(["ar", "ridge", "lasso", "rf"])
     piv.index = [LABEL[m] for m in piv.index]
     piv.columns = [f"h = {h}" for h in piv.columns]
-    t["tableA2"] = md_table(piv.round(3).reset_index().rename(columns={"index": "Model"}),
+    t["tableA2"] = md_table(piv.map(lambda v: fmt(v, 3)).reset_index().rename(columns={"index": "Model"}),
                             "Table A2. Replication gate on FRED-MD: RMSE relative to the random walk, 2001–2015",
                             "US CPI inflation; rolling 360-month window; 180 target months per horizon.")
 
@@ -136,7 +142,7 @@ def build():
     pa = full.pivot(index="model", columns="h", values="ratio_ar").reindex(ORDER)
     pa.index = [LABEL[m] for m in pa.index]
     pa.columns = [str(c) for c in pa.columns]
-    t["tableA3"] = md_table(pa.round(2).reset_index().rename(columns={"index": "Model / h"}),
+    t["tableA3"] = md_table(pa.map(lambda v: fmt(v, 2)).reset_index().rename(columns={"index": "Model / h"}),
                             "Table A3. RMSE relative to the AR at every horizon h = 1, ..., 12 (main specification)")
     dec = main[main.case.isin([c for c, _ in CASES]) & main.model.isin(CHALL)]
     n["min_dm_p"] = fmt(dec.dm_p_ar.min(), 2)
@@ -184,7 +190,9 @@ def build():
     exc = []
     for c, lab in CASES:
         out = [LABEL[m] for m in mcs[(mcs.case == c) & ~mcs.in_mcs90].model]
-        exc.append(f"{' and '.join(out) if out else 'none'} at {lab}")
+        long = {"h1": "one month ahead", "h12": "twelve months ahead", "acc3": "for 3-month accumulated inflation",
+                "acc12": "for 12-month accumulated inflation"}[c]
+        exc.append(f"{' and '.join(out) if out else 'none'} {long}")
     n["mcs_excluded"] = "; ".join(exc)
     n["ar_in_all_mcs"] = bool(mcs[mcs.model == "ar"].in_mcs90.all())
     n["mcs"] = {c: [LABEL[m] for m in mcs[(mcs.case == c) & mcs.in_mcs90].model] for c, _ in CASES}

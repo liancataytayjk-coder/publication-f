@@ -34,4 +34,6 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 ./run_all.sh --download          # re-download the raw data first
 ```
 
-Pandoc must be installed to render the `.docx` file.
+Pandoc must be installed to render the `.docx` file. The manuscript uses the author's house style
+(Times New Roman 12 pt, double spacing, three-line tables; `paper/lian-article-reference.docx`,
+`scripts/style/`); `scripts/style/check_style.py paper/manuscript.docx` audits it.

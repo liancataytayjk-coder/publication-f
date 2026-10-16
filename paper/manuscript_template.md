@@ -1,17 +1,21 @@
 ---
 title: "Can Machine Learning Beat Simple Benchmarks in Forecasting Philippine Inflation? Evidence from a Pre-Registered Pseudo Out-of-Sample Evaluation, 2005–2026"
-author: "[Author name], [Affiliation], [email]"
+author:
+  - "Lian Cataytay[^aff]"
 date: "Draft of {{ n.build_date }}"
 abstract: |
   {{ n.abstract }}
-keywords: "inflation forecasting; machine learning; random forest; LASSO; forecast evaluation; Philippines; emerging markets"
+
+  **Keywords:** inflation forecasting; machine learning; random forest; LASSO; forecast evaluation; Philippines
+
+  **JEL codes:** C53, C55, E31, E37
 ---
+
+[^aff]: [Affiliation]. Contact: [e-mail]. [Acknowledgements.]
 
 <#-- Rendered by scripts/08_paper.py. Do not edit paper/manuscript.md by hand; edit this template. --#>
 
-**JEL codes:** C53, C55, E31, E37.
-
-# 1. Introduction
+# Introduction
 
 Inflation forecasts sit at the centre of monetary policy. The Bangko Sentral ng
 Pilipinas (BSP) has targeted inflation since 2002, and under a forward-looking
@@ -68,7 +72,7 @@ Section 3 the models and the evaluation, and Section 4 the replication gate.
 Section 5 presents the results by research question, Section 6 the robustness
 checks, and Section 7 discusses the findings and concludes.
 
-# 2. Data
+# Data
 
 **Target.** The target is monthly headline inflation, defined as the log change
 of the all-items CPI for all income households (2018 = 100):
@@ -109,9 +113,9 @@ published.
 
 {{ t.table1 }}
 
-# 3. Forecasting models and evaluation
+# Forecasting models and evaluation
 
-## 3.1 Direct forecasts in a rolling window
+## Direct forecasts in a rolling window
 
 We forecast inflation $h = 1, \dots, 12$ months ahead with *direct* forecasts.
 For each horizon we fit a separate model that maps information available at
@@ -135,7 +139,7 @@ available at that origin, they are *pseudo out-of-sample* forecasts: they mimic
 what a forecaster could have done in real time, apart from data revisions,
 which are rare for the Philippine CPI.
 
-## 3.2 Models
+## Models
 
 There are three **benchmarks**. The *random walk* (RW) forecasts that inflation
 in month $t+h$ equals this month's inflation, $\hat\pi_{T+h|T} = \pi_T$, as in
@@ -167,7 +171,7 @@ is the equal-weight average of the five ML forecasts [@timmermann2006]. All
 hyperparameters were fixed in advance (Appendix A) and never tuned on the
 evaluation sample.
 
-## 3.3 Evaluation
+## Evaluation
 
 Accuracy is measured by the root mean squared error (RMSE), the square root of
 the average squared forecast error. We report it relative to a benchmark:
@@ -198,7 +202,7 @@ into *high-inflation* months, where year-on-year inflation exceeds 4% (the top o
 the target band), and all others. We also plot cumulative squared forecast-error
 differences over time [cf. @giacomini2010].
 
-# 4. Validation: the replication gate
+# Validation: the replication gate
 
 Before any Philippine forecast was computed, we tested the code on the
 reference paper's own setting. Using FRED-MD [@mccracken2016], US CPI inflation,
@@ -210,29 +214,29 @@ RMSE among RW, AR, ridge, LASSO and RF. The criteria are qualitative because
 the paper's tables were not accessible when the gate was written.
 {{ n.gate_text }} (Figure 6, Table A2).
 
-# 5. Results
+# Results
 
-## 5.1 RQ1: Do machine-learning models beat the benchmarks?
+## RQ1: Do machine-learning models beat the benchmarks?
 
 {{ n.rq1_text }}
 
 {{ t.table2 }}
 
-## 5.2 RQ2: Which predictors matter?
+## RQ2: Which predictors matter?
 
 {{ n.rq2_text }}
 
-## 5.3 RQ3: When do the gains arise?
+## RQ3: When do the gains arise?
 
 {{ n.rq3_text }}
 
 {{ t.table3 }}
 
-# 6. Robustness
+# Robustness
 
 {{ n.robust_text }}
 
-# 7. Discussion and conclusion
+# Discussion and conclusion
 
 {{ n.discussion_text }}
 
@@ -247,7 +251,7 @@ model could achieve. Finally, we do not compare with the BSP's own published
 forecasts, which are made on a quarterly schedule with information we do not
 observe.
 
-# Declarations
+# Declarations {-}
 
 **Funding.** None. **Competing interests.** None. **Data and code availability.**
 All data are public (PSA OpenSTAT, FRED, BIS). The raw downloads, the code that
@@ -257,20 +261,20 @@ pre-registration are in the replication package (`run_all.sh`).
 hyperparameters, evaluation sample, tests, robustness checks and the replication
 gate) was committed before any estimate. Deviations are listed in Appendix B.
 
-# References
+# References {-}
 
 ::: {#refs}
 :::
 
-# Appendix A. Hyperparameters and implementation
+# Appendix A. Hyperparameters and implementation {-}
 
 {{ t.tableA1 }}
 
-# Appendix B. Decisions log and deviations from the pre-registration
+# Appendix B. Decisions log and deviations from the pre-registration {-}
 
 {{ n.deviations_text }}
 
-# Appendix C. Full results
+# Appendix C. Full results {-}
 
 {{ t.tableA2 }}
 
@@ -278,18 +282,18 @@ gate) was committed before any estimate. Deviations are listed in Appendix B.
 
 {{ t.tableA4 }}
 
-# Figures
+# Figures {-}
 
-![Headline inflation in the Philippines, year on year, January 1995 to {{ n.latest_month }}. The grey band is the BSP target range of 2–4%. The dashed line marks the first month of the forecast evaluation. Source: PSA CPI (2018 = 100), our calculation.](../output/figures/fig1_inflation.png){width=95%}
+![Figure 1. Headline inflation in the Philippines, year on year, January 1995 to {{ n.latest_month }}. The grey band is the BSP target range of 2–4%. The dashed line marks the first month of the forecast evaluation. Source: PSA CPI (2018 = 100), our calculation.](../output/figures/fig1_inflation.png){width=95%}
 
-![RMSE of each model relative to the AR benchmark (left) and to the random walk (right), by forecast horizon, January 2005 to {{ n.oos_end }}. Values below the horizontal line at 1 mean the model is more accurate than the benchmark.](../output/figures/fig2_ratios.png){width=100%}
+![Figure 2. RMSE of each model relative to the AR benchmark (left) and to the random walk (right), by forecast horizon, January 2005 to {{ n.oos_end }}. Values below the horizontal line at 1 mean the model is more accurate than the benchmark.](../output/figures/fig2_ratios.png){width=100%}
 
-![Cumulative squared forecast-error difference between the AR benchmark and each model, by target month, for one-month-ahead (left) and twelve-month-ahead (right) forecasts. A rising line means the model is doing better than the AR over that period; a falling line means it is doing worse.](../output/figures/fig3_csfe.png){width=100%}
+![Figure 3. Cumulative squared forecast-error difference between the AR benchmark and each model, by target month, for one-month-ahead (left) and twelve-month-ahead (right) forecasts. A rising line means the model is doing better than the AR over that period; a falling line means it is doing worse.](../output/figures/fig3_csfe.png){width=100%}
 
-![Share of the random forest's grouped permutation importance by predictor group, averaged over all forecast origins, for one-month-ahead (grey) and twelve-month-ahead (hatched) forecasts.](../output/figures/fig4_importance.png){width=85%}
+![Figure 4. Share of the random forest's grouped permutation importance by predictor group, averaged over all forecast origins, for one-month-ahead (grey) and twelve-month-ahead (hatched) forecasts.](../output/figures/fig4_importance.png){width=85%}
 
-![RMSE relative to the AR at the four decisive cases, for the random forest (filled circles) and the ML combination (open squares), in the main specification and each robustness check. Values left of the vertical line mean the model is more accurate than the AR.](../output/figures/fig5_robustness.png){width=100%}
+![Figure 5. RMSE relative to the AR at the four decisive cases, for the random forest (filled circles) and the ML combination (open squares), in the main specification and each robustness check. Values left of the vertical line mean the model is more accurate than the AR.](../output/figures/fig5_robustness.png){width=100%}
 
-![Replication gate on US data (FRED-MD): RMSE relative to the random walk for the random forest, LASSO, ridge and AR, 2001–2015.](../output/figures/fig6_replication.png){width=75%}
+![Figure 6. Replication gate on US data (FRED-MD): RMSE relative to the random walk for the random forest, LASSO, ridge and AR, 2001–2015.](../output/figures/fig6_replication.png){width=75%}
 
-![Inflation over the next twelve months: actual values and the forecasts of the AR and the ML combination made twelve months earlier, in log points (approximately percent).](../output/figures/fig7_yearahead.png){width=95%}
+![Figure 7. Inflation over the next twelve months: actual values and the forecasts of the AR and the ML combination made twelve months earlier, in log points (approximately percent).](../output/figures/fig7_yearahead.png){width=95%}
